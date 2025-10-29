@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 import "./App.css";
 import Footer from "./components/Footer.jsx";
@@ -7,8 +8,48 @@ import Order from "./components/Order.jsx";
 import Table from "./components/Table.jsx";
 import InvoiceDetails from "./components/InvoiceDetails.jsx";
 import Header from "./components/Header.jsx";
+import InvoiceList from "./InvoiceList.jsx";
 
 function App() {
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    ntnno: "",
+    email: "",
+    phone: "",
+    saleInvoice: "",
+    invoiceNo: "",
+    posId: "",
+    customerNtn: "",
+    user: "",
+    sNo: "",
+    item: "",
+    qty: "",
+    price: "",
+    gstp: "",
+    gstAmt: "",
+    disc: "",
+    total: "",
+    date: "",
+    subTotal: "",
+    totalGst: "",
+    grossAmount: "",
+    totalDiscount: "",
+    fbrFree: "",
+    netBill: "",
+    subTotalNo: "",
+    totalGstNo: "",
+    grossAmountNo: "",
+    totalDiscountNo: "",
+    fbrFreeNo: "",
+    cash: "",
+    cashNo: "",
+    fbrInv: "",
+    gstInclude: "",
+    software: "",
+    mobile: "",
+  });
+  const [showInvoiceList, setShowInvoiceList] = useState(false);
   const [showInvoice, setShowInvoice] = useState(false);
   const [name, setName] = useState("");
   const [address, setAdress] = useState("");
@@ -47,83 +88,52 @@ function App() {
   const [software, setSoftware] = useState("");
   const [mobile, setMobile] = useState("");
 
+  const getData = async () => {
+    const res = await fetch("http://localhost:4000");
+    const data = await res.json();
+    console.log(data);
+  };
+
+  getData();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/post", formData);
+
+      console.log(response.data);
+      alert("Data sent successfully!");
+      setShowInvoiceList(true);
+    } catch (error) {
+      console.error("Error sending data:", error);
+      alert("Failed to send data");
+    }
+  };
   return (
     <>
       <main className="app-container">
-        {showInvoice ? (
-          <div>
-            <Header
-              name={name}
-              address={address}
-              ntnno={ntnno}
-              email={email}
-              phone={phone}
-            />
-
-            <InvoiceDetails
-              saleInvoice={saleInvoice}
-              invoiceNo={invoiceNo}
-              posId={posId}
-              customerNtn={customerNtn}
-              user={user}
-              date={date}
-            />
-
-            <Table
-              sNo={sNo}
-              item={item}
-              qty={qty}
-              price={price}
-              gstp={gstp}
-              gstAmt={gstAmt}
-              disc={disc}
-              total={total}
-            />
-
-            <Order
-              subTotal={subTotal}
-              subTotalNo={subTotalNo}
-              totalGst={totalGst}
-              totalGstNo={totalGstNo}
-              grossAmount={grossAmount}
-              grossAmountNo={grossAmountNo}
-              totalDiscount={totalDiscount}
-              totalDiscountNo={totalDiscountNo}
-              fbrFree={fbrFree}
-              fbrFreeNo={fbrFreeNo}
-              netBill={netBill}
-            />
-
-            <Payments cash={cash} cashNo={cashNo} />
-
-            <Footer
-              fbrInv={fbrInv}
-              gstInclude={gstInclude}
-              software={software}
-              mobile={mobile}
-            />
-
-            <button
-              className="previewBtn"
-              onClick={() => setShowInvoice(false)}
-            >
-              Edit Information
-            </button>
-          </div>
+        {showInvoiceList ? (
+          <InvoiceList onBack={() => setShowInvoiceList(false)} />
         ) : (
           <>
-            <div className="input-container">
+            <form onSubmit={handleSubmit}>
               <label htmlFor="name">
                 <b>Name</b>
               </label>
               <input
                 type="text"
-                name="text"
+                name="name"
                 id="name"
                 placeholder="Enter Company Name"
                 autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                // value={name}
+                value={formData.name}
+                // onChange={(e) => setName(e.target.value)}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -132,12 +142,14 @@ function App() {
               </label>
               <input
                 type="text"
-                name="text"
+                name="address"
                 id="address"
                 placeholder="Enter Company Adress"
                 autoComplete="off"
-                value={address}
-                onChange={(e) => setAdress(e.target.value)}
+                value={formData.address}
+                // value={address}
+                // onChange={(e) => setAdress(e.target.value)}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -146,12 +158,14 @@ function App() {
               </label>
               <input
                 type="number"
-                name="number"
+                name="ntnno"
                 id="ntnno"
                 placeholder="Enter Your NTN No:"
                 autoComplete="off"
-                value={ntnno}
-                onChange={(e) => setNtnno(e.target.value)}
+                // value={ntnno}
+                value={formData.ntnno}
+                // onChange={(e) => setNtnno(e.target.value)}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -164,8 +178,8 @@ function App() {
                 id="email"
                 placeholder="Enter Your Email Account"
                 autoComplete="off"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -178,8 +192,8 @@ function App() {
                 id="phone"
                 placeholder="Enter Your Phone No:"
                 autoComplete="off"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={formData.phone}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -192,8 +206,8 @@ function App() {
                 id="saleInvoice"
                 placeholder="Enter the Type of Invoice:"
                 autoComplete="off"
-                value={saleInvoice}
-                onChange={(e) => setSaleInvoice(e.target.value)}
+                value={formData.saleInvoice}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -206,8 +220,8 @@ function App() {
                 id="invoiceNo"
                 placeholder="Enter Invoice No:"
                 autoComplete="off"
-                value={invoiceNo}
-                onChange={(e) => setInvoiceNo(e.target.value)}
+                value={formData.invoiceNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -220,8 +234,8 @@ function App() {
                 id="posId"
                 placeholder="Enter POS ID:"
                 autoComplete="off"
-                value={posId}
-                onChange={(e) => setPosId(e.target.value)}
+                value={formData.posId}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -234,8 +248,8 @@ function App() {
                 id="customerNtn"
                 placeholder="Enter Customer NTN Status:"
                 autoComplete="off"
-                value={customerNtn}
-                onChange={(e) => setCustomerNtn(e.target.value)}
+                value={formData.customerNtn}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -248,8 +262,8 @@ function App() {
                 id="user"
                 placeholder="Enter User Role:"
                 autoComplete="off"
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
+                value={formData.user}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -262,8 +276,8 @@ function App() {
                 id="date"
                 placeholder="Enter Date Role:"
                 autoComplete="off"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={formData.date}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -276,8 +290,8 @@ function App() {
                 id="sNo"
                 placeholder="Enter S No:"
                 autoComplete="off"
-                value={sNo}
-                onChange={(e) => setSNo(e.target.value)}
+                value={formData.sNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -290,8 +304,8 @@ function App() {
                 id="item"
                 placeholder="Enter Items:"
                 autoComplete="off"
-                value={item}
-                onChange={(e) => setItem(e.target.value)}
+                value={formData.item}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -304,8 +318,8 @@ function App() {
                 id="qty"
                 placeholder="Enter Qty:"
                 autoComplete="off"
-                value={qty}
-                onChange={(e) => setQty(e.target.value)}
+                value={formData.qty}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -318,8 +332,8 @@ function App() {
                 id="price"
                 placeholder="Enter Price:"
                 autoComplete="off"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={formData.price}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -332,8 +346,8 @@ function App() {
                 id="gstp"
                 placeholder="Enter Gst Percentage:"
                 autoComplete="off"
-                value={gstp}
-                onChange={(e) => setGstp(e.target.value)}
+                value={formData.gstp}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -346,22 +360,22 @@ function App() {
                 id="gstAmt"
                 placeholder="Enter Gst Amount:"
                 autoComplete="off"
-                value={gstAmt}
-                onChange={(e) => setGstAmt(e.target.value)}
+                value={formData.gstAmt}
+                onChange={handleChange}
                 className="inputField"
               />
 
-              <label htmlFor="dics">
+              <label htmlFor="disc">
                 <b>Disc:</b>
               </label>
               <input
                 type="number"
-                name="dics"
-                id="dics"
+                name="disc"
+                id="disc"
                 placeholder="Enter Disc:"
                 autoComplete="off"
-                value={disc}
-                onChange={(e) => setDisc(e.target.value)}
+                value={formData.disc}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -374,8 +388,8 @@ function App() {
                 id="total"
                 placeholder="Enter Total:"
                 autoComplete="off"
-                value={total}
-                onChange={(e) => setTotal(e.target.value)}
+                value={formData.total}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -389,8 +403,8 @@ function App() {
                 placeholder="Enter Type of Total:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={subTotal}
-                onChange={(e) => setSubTotal(e.target.value)}
+                value={formData.subTotal}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -403,8 +417,8 @@ function App() {
                 id="subTotalNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={subTotalNo}
-                onChange={(e) => setSubTotalNo(e.target.value)}
+                value={formData.subTotalNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -418,8 +432,8 @@ function App() {
                 placeholder="Enter Type of GST:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={totalGst}
-                onChange={(e) => setTotalGst(e.target.value)}
+                value={formData.totalGst}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -432,8 +446,8 @@ function App() {
                 id="totalGstNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={totalGstNo}
-                onChange={(e) => setTotalGstNo(e.target.value)}
+                value={formData.totalGstNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -447,8 +461,8 @@ function App() {
                 placeholder="Enter Type of Amount:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={grossAmount}
-                onChange={(e) => setGrossAmount(e.target.value)}
+                value={formData.grossAmount}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -461,8 +475,8 @@ function App() {
                 id="grossAmountNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={grossAmountNo}
-                onChange={(e) => setGrossAmountNo(e.target.value)}
+                value={formData.grossAmountNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -476,8 +490,8 @@ function App() {
                 placeholder="Enter Type of Discount:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={totalDiscount}
-                onChange={(e) => setTotalDiscount(e.target.value)}
+                value={formData.totalDiscount}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -490,8 +504,8 @@ function App() {
                 id="totalDiscountNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={totalDiscountNo}
-                onChange={(e) => setTotalDiscountNo(e.target.value)}
+                value={formData.totalDiscountNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -505,8 +519,8 @@ function App() {
                 placeholder="Enter FBR:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={fbrFree}
-                onChange={(e) => setFbrFree(e.target.value)}
+                value={formData.fbrFree}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -519,8 +533,8 @@ function App() {
                 id="fbrFreeNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={fbrFreeNo}
-                onChange={(e) => setFbrFreeNo(e.target.value)}
+                value={formData.fbrFreeNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -533,8 +547,8 @@ function App() {
                 id="netBill"
                 placeholder="Enter Net Bill Amount:"
                 autoComplete="off"
-                value={netBill}
-                onChange={(e) => setNetBill(e.target.value)}
+                value={formData.netBill}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -548,8 +562,8 @@ function App() {
                 placeholder="Enter the Type of Payments:"
                 autoComplete="off"
                 autoCapitalize="on"
-                value={cash}
-                onChange={(e) => setCash(e.target.value)}
+                value={formData.cash}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -562,8 +576,8 @@ function App() {
                 id="cashNo"
                 placeholder="Enter Amount:"
                 autoComplete="off"
-                value={cashNo}
-                onChange={(e) => setCashNo(e.target.value)}
+                value={formData.cashNo}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -576,8 +590,8 @@ function App() {
                 id="fbrInv"
                 placeholder="Enter FBR INV#:"
                 autoComplete="off"
-                value={fbrInv}
-                onChange={(e) => setFbrInv(e.target.value)}
+                value={formData.fbrInv}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -590,8 +604,8 @@ function App() {
                 id="gstInclude"
                 placeholder="Enter GST Including Details:"
                 autoComplete="off"
-                value={gstInclude}
-                onChange={(e) => setGstInclude(e.target.value)}
+                value={formData.gstInclude}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -604,8 +618,8 @@ function App() {
                 id="software"
                 placeholder="Enter Software Developer Details:"
                 autoComplete="off"
-                value={software}
-                onChange={(e) => setSoftware(e.target.value)}
+                value={formData.software}
+                onChange={handleChange}
                 className="inputField"
               />
 
@@ -618,18 +632,15 @@ function App() {
                 id="mobile"
                 placeholder="Enter Mobile No:"
                 autoComplete="off"
-                value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
+                value={formData.mobile}
+                onChange={handleChange}
                 className="inputField"
               />
 
-              <button
-                className="previewBtn"
-                onClick={() => setShowInvoice(true)}
-              >
-                Preview Invoice
+              <button className="previewBtn" type="submit">
+                Submint
               </button>
-            </div>
+            </form>
           </>
         )}
       </main>
