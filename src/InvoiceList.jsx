@@ -1,6 +1,16 @@
-import axios, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const InvoiceList = ({ onBack }) => {
+
+  const [invoicesItems, setInvoicesItems] = useState([]);
+
+useEffect(()=>{
+  const res = axios.get("/api/invoices");
+  const data = res.data;
+  setInvoicesItems(data);
+},[])
+
+  app.get
   return (
     <main>
       <h2>All Invoices</h2>
