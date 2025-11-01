@@ -91,21 +91,20 @@ h2 {
   padding: 4px 16px;
 }
 
-table {
+.itemsTable {
   width: 98%;
   border-collapse: collapse;
   border: 2px solid #333;
   margin: 20px;
 }
 
-th,
-td {
+.itemsTable td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
 }
 
-th {
+.itemsTable th {
   background-color: #e2e2e2;
 }
 
@@ -198,7 +197,7 @@ input {
   font-weight: 500;
 }
 
-.invoiceContainer{
+.InvoiceContainer {
   margin: 15px;
   padding: 15px;
   max-width: 60rem;
@@ -207,4 +206,49 @@ input {
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.1), 0 2px 3px -2px rgb(0 0 0 / 0.1);
+}
+
+.InvoiceTable {
+  margin: 15px;
+  padding: 15px;
+  max-width: 60rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.1), 0 2px 3px -2px rgb(0 0 0 / 0.1);
+}
+
+.InvoiceTableDetails {
+  width: 100%;
+  text-align: center;
+}
+.table-header {
+  background-color: gray;
+  color: white;
+  padding: 10px !important;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 10px !important;
+}
+.table-head {
+  text-align: center;
+  width: 100%;
+}
+
+td {
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+}
+
+.viewBtn:hover {
+  background-color: rgb(221, 220, 220);
+  transition: all 1s;
+  cursor: pointer;
 }
