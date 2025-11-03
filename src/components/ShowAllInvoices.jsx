@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
+import "../App.css";
 
 const ShowAllInvoices = () => {
   const [invoicesItems, setInvoicesItems] = useState([]);
@@ -55,7 +55,9 @@ const ShowAllInvoices = () => {
                       <td>{item.posId}</td>
                       <td>{item.customerNtn}</td>
                       <td>{item.date}</td>
-                      <td className="viewBtn">view</td>
+                      <td className="viewBtn" onClick={()=> {
+                        navigate("/invoicedesign", { state: { invoice:item }})
+                      }}><strong>view</strong></td>
                     </tr>
                   </tbody>
                 </table>

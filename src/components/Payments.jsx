@@ -1,5 +1,9 @@
+import { useLocation } from "react-router-dom"
+import "../App.css";
 
-const Payments = ({cash, cashNo}) => {
+const Payments = () => {
+  const location = useLocation();
+  const { invoice } = location.state || {};
   return (
     <>
         <section className="lastPayment">
@@ -7,14 +11,14 @@ const Payments = ({cash, cashNo}) => {
                 <h3 className="h3">
                 <strong>Payments</strong>
                 </h3>
-                <p>{cash}</p>
+                <p>{invoice.cash}</p>
             </div>
             <div>
-                <p>{cashNo}</p>
+                <p>{invoice.cashNo}</p>
             </div>
         </section>
     </>
   )
 }
 
-export default Payments
+export default Payments;

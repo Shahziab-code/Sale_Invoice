@@ -1,4 +1,9 @@
-const Table = ({ sNo, item, qty, price, gstp, gstAmt, disc, total }) => {
+import { useLocation } from "react-router-dom";
+import "../App.css";
+
+const Table = () => {
+  const location = useLocation();
+  const { invoice } = location.state || {};
   return (
     <>
       <table className="itemsTable">
@@ -16,14 +21,14 @@ const Table = ({ sNo, item, qty, price, gstp, gstAmt, disc, total }) => {
         </thead>
         <tbody>
           <tr>
-            <td>{sNo}</td>
-            <td>{item}</td>
-            <td>{qty}</td>
-            <td>{price}</td>
-            <td>{gstp}%</td>
-            <td>{gstAmt}</td>
-            <td>{disc}</td>
-            <td>{total}</td>
+            <td>{invoice.sNo}</td>
+            <td>{invoice.item}</td>
+            <td>{invoice.qty}</td>
+            <td>{invoice.price}</td>
+            <td>{invoice.gstp}%</td>
+            <td>{invoice.gstAmt}</td>
+            <td>{invoice.disc}</td>
+            <td>{invoice.total}</td>
           </tr>
         </tbody>
       </table>

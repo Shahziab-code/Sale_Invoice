@@ -1,38 +1,32 @@
-const Order = ({
-  subTotal,
-  subTotalNo,
-  totalGst,
-  totalGstNo,
-  grossAmount,
-  grossAmountNo,
-  totalDiscount,
-  totalDiscountNo,
-  fbrFree,
-  fbrFreeNo,
-  netBill,
-}) => {
+import { useLocation } from "react-router-dom";
+import "../App.css";
+
+
+const Order = () => {
+  const location = useLocation();
+  const { invoice } = location.state || {};
   return (
     <>
       <section className="position">
         <div className="orderDetails">
           <div className="left-details">
-            <p>{subTotal}:</p>
-            <p>{totalGst}:</p>
-            <p>{grossAmount}:</p>
-            <p>{totalDiscount}:</p>
-            <p>{fbrFree}:</p>
+            <p>{invoice.subTotal}:</p>
+            <p>{invoice.totalGst}:</p>
+            <p>{invoice.grossAmount}:</p>
+            <p>{invoice.totalDiscount}:</p>
+            <p>{invoice.fbrFree}:</p>
             <p className="netBill">
               <strong>Net Bill:</strong>
             </p>
           </div>
           <div className="right-details">
-            <p>{subTotalNo}</p>
-            <p>{totalGstNo}</p>
-            <p>{grossAmountNo}</p>
-            <p>{totalDiscountNo}</p>
-            <p>{fbrFreeNo}</p>
+            <p>{invoice.subTotalNo}</p>
+            <p>{invoice.totalGstNo}</p>
+            <p>{invoice.grossAmountNo}</p>
+            <p>{invoice.totalDiscountNo}</p>
+            <p>{invoice.fbrFreeNo}</p>
             <p className="netBill">
-              <strong>{netBill}</strong>
+              <strong>{invoice.netBill}</strong>
             </p>
           </div>
         </div>
