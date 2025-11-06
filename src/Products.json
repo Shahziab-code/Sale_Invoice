@@ -1,0 +1,27 @@
+{
+    "Criket-Bat":{
+        "price":"300",
+        "gstp":"2",
+        "disc":"20"
+    },
+    "Criket-Ball":{
+        "price":"100",
+        "gstp":"2",
+        "disc":"10"
+    },
+    "FootBall":{
+        "price":"600",
+        "gstp":"4",
+        "disc":"50"
+    },
+    "Iphone":{
+        "price":"82000",
+        "gstp":"12",
+        "disc":"500"
+    },
+    "Laptop":{
+        "price":"62000",
+        "gstp":"10",
+        "disc":"400"
+    }
+}

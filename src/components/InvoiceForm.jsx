@@ -1,4 +1,5 @@
 import "../App.css";
+import "../Products.json";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -43,6 +44,8 @@ const InvoiceForm = () => {
     mobile: "",
   });
 
+  const [selectedValue, setSelectedValue] = useState("option 1");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     let updateForm = { ...formData, [name]: value };
@@ -52,17 +55,17 @@ const InvoiceForm = () => {
     const gstp = parseFloat(updateForm.gstp) || 0;
     const disc = parseFloat(updateForm.disc) || 0;
 
-    const subTotal = price * qty;
-    const gstAmt = (subTotal * gstp) / 100;
-    const total = subTotal + gstAmt - disc;
+    const subTotalNo = price * qty;
+    const gstAmt = (subTotalNo * gstp) / 100;
+    const total = subTotalNo + gstAmt - disc;
 
-    updateForm.subTotal = subTotal.toFixed(2);
+    updateForm.subTotalNo = subTotalNo.toFixed(2);
     updateForm.gstAmt = gstAmt.toFixed(2);
     updateForm.total = total.toFixed(2);
 
     if (qty == 0) {
       updateForm.total = 0;
-      updateForm.subTotal = 0;
+      updateForm.subTotalNo = 0;
     }
 
     setFormData(updateForm);
@@ -70,7 +73,6 @@ const InvoiceForm = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    const sum = price + gstAmt;
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/post", formData);
@@ -297,7 +299,7 @@ const InvoiceForm = () => {
               </div>
 
               <div className="formColume">
-                <label htmlFor="item" className="formLabel">
+                {/* <label htmlFor="item" className="formLabel">
                   <b>Items:</b>
                 </label>
                 <input
@@ -309,7 +311,15 @@ const InvoiceForm = () => {
                   value={formData.item}
                   onChange={handleChange}
                   className="inputField"
-                />
+                /> */}
+                <select
+                  value={selectedValue}
+                  onChange={(e) => setSelectedValue(e.target.value)}
+                  >
+                  <option value="Option 1">Option 1</option>
+                  <option value="Option 2">Option 2</option>
+                  <option value="Option 3">Option 3</option>
+                </select>
               </div>
 
               <div className="formColume">

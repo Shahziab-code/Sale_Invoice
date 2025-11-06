@@ -10,11 +10,11 @@ const Order = () => {
       <section className="position">
         <div className="orderDetails">
           <div className="left-details">
-            <p>{invoice.subTotal}:</p>
-            <p>{invoice.totalGst}:</p>
-            <p>{invoice.grossAmount}:</p>
-            <p>{invoice.totalDiscount}:</p>
-            <p>{invoice.fbrFree}:</p>
+            <p>Sub Total:</p>
+            <p>Total GST:</p>
+            <p>Gross Amount:</p>
+            <p>Total Discount:</p>
+            <p>FBR Free:</p>
             <p className="netBill">
               <strong>Net Bill:</strong>
             </p>
